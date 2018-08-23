@@ -7,20 +7,23 @@
 # package to access Twitter API
 library("twitteR")
 
-# authenticaton information: consumer_key, consume_secret, access_token, and access_secret. 
 
-secret <- read.table("secret.file", stringsAsFactors = FALSE)
-consumer_key <- secret[[1]][[1]]
-consumer_secret <- secret[[1]][[2]]
-access_token <- secret[[1]][[3]]
-access_secret <- secret[[1]][[4]]
+twitterCrawler <- function(){
     
-# setup authentication information
-setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
-
-# get the 25 most recent tweets from the user specified n the first argument of 'userTimeline'
-tw <- userTimeline("realDonaldTrump", n = 26)
-
-# convert to dataframe
-d = twitteR::twListToDF(tw)
-View(d)
+    # read access keys
+    secret <- read.table("secret.file", stringsAsFactors = FALSE)
+    consumer_key <- secret[[1]][[1]]
+    consumer_secret <- secret[[1]][[2]]
+    access_token <- secret[[1]][[3]]
+    access_secret <- secret[[1]][[4]]
+    
+    # setup authentication information
+    setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+    
+    # get the 25 most recent tweets from the user specified n the first argument of 'userTimeline'
+    tw <- userTimeline("realDonaldTrump", n = 26)
+    
+    # convert to dataframe
+    d = twitteR::twListToDF(tw)
+    d
+}
