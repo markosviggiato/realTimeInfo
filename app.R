@@ -9,20 +9,23 @@ library("shiny")
 library("shinyalert")
 library("shinyBS")
 library(DT)
+library(ggplot2)
+library("shinydashboard")
 
 # ui object - mandatory component to build an application using Shiny package
 ui <- fluidPage(
       useShinyalert(),
     
-      headerPanel("Here you can find the latest news about Donald Trump!"),
-    
-      sidebarPanel(selectInput(inputId = "source", label = "Select what you would like to see",
-            choices =  c("CNN news" = "CNN news", "Tweets" = "Tweets"), selectize = TRUE, width = NULL, size = NULL),
-            actionButton("butt", "Show frequent terms")),
-
-      mainPanel("Select how many entries you wish to see", dataTableOutput("result")),
-    
-      bsModal("modal", "Frequent terms tweeted by Donald Trump", "butt", size = "large",plotOutput("topicHist"))
+      #headerPanel("Here you can find the latest news about Donald Trump!"),
+      dashboardPage(
+            title = "Real Time News - Donald Trump",
+            dashboardHeader(title = "Find the Latest News About Donald Trump", titleWidth = 800), 
+            dashboardSidebar(selectInput(inputId = "source", label = "Select what you would like to see",
+                             choices =  c("CNN news" = "CNN news", "Tweets" = "Tweets"), selectize = TRUE, width = NULL, size = NULL),
+                             actionButton("butt", "Show frequent terms")),
+      
+            dashboardBody("Select how many entries you wish to see", dataTableOutput("result"), uiOutput("out"))
+      )
 )
 
 # server object - mandatory component to build an application using Shiny package
@@ -33,13 +36,16 @@ server <- function(input, output) {
       source("CNNCrawler.R")
       mytwt <- twitterCrawler()
       mycnn <- CNNCrawler()
-    
+      
       # fill the output 'topicHist' defined in the UI object
-      output$topicHist <- renderPlot({
+      output$out <- renderUI({
             
-            # load the script that analyze the frequent terms in Trump's tweets and display the plot
-            source("frequentTopics.R")
-            frequentTopics()
+            # load the script that analyze the frequent terms in Trump's tweets and display the plot in a popup window
+            bsModal("modal", "Frequent terms tweeted by Donald Trump", "butt", size = "large",renderPlot({
+                  source("frequentTopics.R")
+                  frequentTopics()
+            }))
+                    
       })
     
       # helper function to create inputs
