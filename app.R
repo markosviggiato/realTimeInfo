@@ -1,116 +1,101 @@
 ### Author : Markos Viggiato
 ### Date : August 23rd, 2018
+### Web application developed using the Shiny package: 'https://shiny.rstudio.com/'
 
 #################
 
+# useful packages
 library("shiny")
 library("shinyalert")
+library("shinyBS")
+library(DT)
 
-# ui object
+# ui object - mandatory component to build an application using Shiny package
 ui <- fluidPage(
-    useShinyalert(),
-
-        headerPanel("The lastest information about Donald Trump!"),
-
-        sidebarPanel(selectInput(inputId = "source", label = "Select what you wish to see",
-                                             choices =  c("CNN news" = "CNN news",
-                                                          "Tweets" = "Tweets"),
-                                             selectize = TRUE, width = NULL, size = NULL)),
-
-        mainPanel("Click on the item you wish to see",
-                  dataTableOutput("result")
-        )
-
-
-)
-# 
-# server <- function(input, output) {
-#     source("twitterCrawler.R")
-#     source("CNNCrawler.R")
-#     mytwt <- twitterCrawler()
-#     mycnn <- CNNCrawler()
-#     
-#     observeEvent(input$preview, {
-#         # Show a modal when the button is pressed
-#         shinyalert("Oops!", "show text")
-#     })
-#     
-#     output$result <- renderDataTable(
-#         
-#         if(input$source == 'Tweets'){
-#             #url <- a(mytwt$text, href=paste0("https://twitter.com/realDonaldTrump/status/", mytwt$id))
-#             #as.data.frame(mytwt$text)
-#             data <- character(length(mytwt$text))
-#             data[1] <- a(mytwt$text[1], href=paste0("https://twitter.com/realDonaldTrump/status/", mytwt$id[1]))
-#             as.data.frame(data)
-#             
-#         }
-#         else{
-#             url <- a(mycnn$title, href=mycnn$url)
-#             tagList("URL link:", url)
-#             #as.data.frame(mycnn$title)
-#         }
-#     )
-#     
-# }
-# 
-server <- function(input, output) {
-    source("twitterCrawler.R")
-    source("CNNCrawler.R")
-    mytwt <- twitterCrawler()
-    mycnn <- CNNCrawler()
+      useShinyalert(),
     
-    output$result <- renderDataTable({
-        if(input$source == 'CNN news'){
-            my_table <- cbind(mycnn[,4], mycnn[,5])
-            View(my_table)
-            colnames(my_table) <- c("Title", "URL")
-            #my_table$link <- sprintf('<a href=%s" target="_blank" class="btn btn-primary">Info</a>',as.data.frame(my_table$url))
-            #my_table$link <- a("info", href="https://edition.cnn.com/2018/08/23/politics/trump-flipping-outlawed/index.html")
-            return(my_table)
-        }
-        else{
-            #url <- a(mytwt$text, href=mycnn$url)
-            #tagList("URL link:", url)
-            datatwet <- as.data.frame(mytwt$text)
-            colnames(datatwet) <- "Post"
-            return(datatwet)
-        }
-    }, escape = FALSE)
+      headerPanel("Here you can find the latest news about Donald Trump!"),
+    
+      sidebarPanel(selectInput(inputId = "source", label = "Select what you would like to see",
+            choices =  c("CNN news" = "CNN news", "Tweets" = "Tweets"), selectize = TRUE, width = NULL, size = NULL),
+            actionButton("butt", "Show frequent terms")),
+
+      mainPanel("Select how many entries you wish to see", dataTableOutput("result")),
+    
+      bsModal("modal", "Frequent terms tweeted by Donald Trump", "butt", size = "large",plotOutput("topicHist"))
+)
+
+# server object - mandatory component to build an application using Shiny package
+server <- function(input, output) {
+      
+      # load scripts to crawl Twitter and CNN.com
+      source("twitterCrawler.R")
+      source("CNNCrawler.R")
+      mytwt <- twitterCrawler()
+      mycnn <- CNNCrawler()
+    
+      # fill the output 'topicHist' defined in the UI object
+      output$topicHist <- renderPlot({
+            
+            # load the script that analyze the frequent terms in Trump's tweets and display the plot
+            source("frequentTopics.R")
+            frequentTopics()
+      })
+    
+      # helper function to create inputs
+      shinyInput <- function(FUN, len, id, ...) {
+            inputs <- character(len)
+            for (i in seq_len(len)) {
+                  inputs[i] <- as.character(FUN(paste0(id, i), ...))
+            }
+            inputs
+      }
+      
+      # create the data frame to display the CNN article' titles    
+      dfCNN <- reactiveValues(data = data.frame(
+            Articles = mycnn$title,
+            Actions = shinyInput(actionButton, length(mycnn$title), 'button_', label = "Read", onclick = 'Shiny.onInputChange(\"select_button\",  this.id)' ),
+            stringsAsFactors = FALSE,
+            row.names = 1:length(mycnn$title)
+      ))
+       
+      # create the data frame to display the Twitter posts    
+      dfTwitter <- reactiveValues(data = data.frame(
+            Posts = mytwt$text,
+            Actions = shinyInput(actionButton, length(mytwt$text), 'button_', label = "Read", onclick = 'Shiny.onInputChange(\"select_button\",  this.id)' ),
+            stringsAsFactors = FALSE,
+            row.names = 1:length(mytwt$text)
+      ))
+      
+      # Assemble the output depending on what the user want to see (CNN news or tweets)
+      output$result <- renderDataTable({
+      
+            if(input$source == 'CNN news')
+                  dfCNN$data
+            else
+                  dfTwitter$data
+      },
+      server = FALSE, escape = FALSE, selection = 'none')
+
+      # monitoring the click event
+      observeEvent(input$select_button, {
+            selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
+            
+            # define the correct url based on the option selected by the user
+            if(input$source == 'CNN news')
+                  url <- mycnn[selectedRow,4]
+            else
+                  url <- paste0("https://twitter.com/realDonaldTrump/status/",mytwt[selectedRow,8])
+         
+            showModal(modalDialog(
+                  if(input$source == 'Tweets'){
+                        h5(mytwt[selectedRow, 1])
+                  },
+                  h4( tags$strong("If you want to see the original text, please click below") ),
+                  tags$a(href=url, "Read original text!", target="_blank"), easyClose = TRUE, footer = NULL
+            ))
+     })
 }
 
+# to execute the app
 shinyApp(ui = ui, server = server)
-
-
-# library(shiny)
-# 
-# createLink <- function(val) {
-#     sprintf('<a href="https://www.google.com/#q=%s" target="_blank" class="btn btn-primary">Info</a>',val)
-# }
-# 
-# ui <- fluidPage(  
-#     titlePanel("Table with Links!"),
-#     sidebarLayout(
-#         sidebarPanel(
-#             h4("Click the link in the table to see
-#          a google search for the car.")
-#         ),
-#         mainPanel(
-#             dataTableOutput('table1')
-#         )
-#     )
-# )
-# 
-# server <- function(input, output) {
-#     
-#     output$table1 <- renderDataTable({
-#         
-#         my_table <- cbind(rownames(mtcars), mtcars)
-#         colnames(my_table)[1] <- 'car'
-#         my_table$link <- createLink(my_table$car)
-#         return(my_table)
-#         
-#     }, escape = FALSE)
-# }
-# 
-# shinyApp(ui, server)
