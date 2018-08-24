@@ -24,8 +24,8 @@ ui <- fluidPage(
                              choices =  c("CNN news" = "CNN news", "Tweets" = "Tweets"), selectize = TRUE, width = NULL, size = NULL),
                              actionButton("butt", "Show sentiments in tweets")),
       
-            dashboardBody("Select how many entries you wish to see", dataTableOutput("result"), uiOutput("out"))
-      )
+            dashboardBody("Select how many entries you wish to see", dataTableOutput("result"), shinycssloaders::withSpinner(uiOutput("out")))
+      ) #shinycssloaders::withSpinner(plotOutput("outplot"))
 )
 
 # server object - mandatory component to build an application using Shiny package
@@ -39,15 +39,16 @@ server <- function(input, output) {
       
       # fill the output 'topicHist' defined in the UI object
       output$out <- renderUI({
-            
+
             # load the script that analyze the frequent terms in Trump's tweets and display the plot in a popup window
-            bsModal("modal", "Sentiments in Donald Trump tweets", "butt", size = "large",renderPlot({
+            bsModal("modal", "Sentiments in Donald Trump tweets (wait to fully load)", "butt", size = "large",renderPlot({
                   source("sentiment.R")
                   sentiment()
             }))
-                    
+
       })
-    
+      
+
       # helper function to create inputs
       shinyInput <- function(FUN, len, id, ...) {
             inputs <- character(len)
