@@ -22,7 +22,7 @@ ui <- fluidPage(
             dashboardHeader(title = "Find the Latest News About Donald Trump", titleWidth = 800), 
             dashboardSidebar(selectInput(inputId = "source", label = "Select what you would like to see",
                              choices =  c("CNN news" = "CNN news", "Tweets" = "Tweets"), selectize = TRUE, width = NULL, size = NULL),
-                             actionButton("butt", "Show frequent terms")),
+                             actionButton("butt", "Show sentiments in tweets")),
       
             dashboardBody("Select how many entries you wish to see", dataTableOutput("result"), uiOutput("out"))
       )
@@ -41,9 +41,9 @@ server <- function(input, output) {
       output$out <- renderUI({
             
             # load the script that analyze the frequent terms in Trump's tweets and display the plot in a popup window
-            bsModal("modal", "Frequent terms tweeted by Donald Trump", "butt", size = "large",renderPlot({
-                  source("frequentTopics.R")
-                  frequentTopics()
+            bsModal("modal", "Sentiments in Donald Trump tweets", "butt", size = "large",renderPlot({
+                  source("sentiment.R")
+                  sentiment()
             }))
                     
       })
