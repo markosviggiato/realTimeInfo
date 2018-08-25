@@ -11,13 +11,13 @@ Plase use the following link to access the application: [Real Time News](https:/
 ## Features
 
 * Track what is new about Donald Trump. Access the news from the most recent ones to the oldest ones.
-* Check the title of the 25 latest articles from CNN (or less if the 25 are not available). In addition, it is possible to access the article in the original website from CNN.
+* Check the title of the 25 latest articles from CNN (or less if the 25 are not available). In addition, it is possible to read the article in the original website from CNN.
 * Check the 25 latest tweets posted by Donald Trump. Also, it is possible to be redirected to the original post in Twitter.com.
 * Check a cool sentiment analysis regarding the tweets from Mr. Trump. It is possible to see how many tweets lie within each sentiment, such as *fear*, *sadness*, *anger* and *trust*. For this analysis, the last 1000 tweets are analyzed.
 * (Available soon) Check which topics are more frequent in Trump tweets. For instance, it is possible to check whether the latest tweets are related to economy, health or education. For this analysis, the last 1000 tweets are analyzed.
 
 ## Sentiment Analysis
-Sentiment analysis is a recent field and has received much attention from researchers and practitioners. Despite the several challenges (e.g., identify sarcarsm and irony), at this moment it is possible to identify many sentiments with relative ease.
+Sentiment analysis is a recent field and has received much attention from researchers and practitioners. Despite the several challenges (e.g., identify sarcasm and irony), at this moment it is possible to identify many sentiments with relative ease.
 
 This application relies on a third party R package developed to perform text mining, named *tm* (https://cran.r-project.org/web/packages/tm/index.html). Furthermore, a base code (https://github.com/susanli2016/Data-Analysis-with-R) was used to support the development of this feature in the application. 
 
