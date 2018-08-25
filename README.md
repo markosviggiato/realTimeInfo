@@ -4,7 +4,7 @@
 
 
 
-This is a real time web application developed in R to collect the latest information related to Donald Trump from CNN.com and Twitter.com.
+This is a real time web application developed in R to collect the latest information related to Donald Trump from CNN and Twitter.
 
 Plase use the following link to access the application: [Real Time News](https://viggiato.shinyapps.io/real_time_news/)
 
