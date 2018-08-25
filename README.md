@@ -21,6 +21,8 @@ Sentiment analysis is a recent field and has received much attention from resear
 
 This application relies on a third party R package developed to perform text mining, named *tm* (https://cran.r-project.org/web/packages/tm/index.html). Furthermore, a base code (https://github.com/susanli2016/Data-Analysis-with-R) was used to support the development of this feature in the application. 
 
+In order to graphically see the sentiments, the user must click on the 'Show sentiments in tweets' button and wait for a popup window to load the graph. Then, it is possible to see the distribution of the sentiments. In this application, the following sentiments are analyzed: *anger*, *anticipation*, *disgust*, *fear*, *joy*, *negative*, *positive*, *sadness*, *surprise*, and *trust*.
+
 ## Frequent Topics in Trump Tweets (available soon)
 This feature allows the user to check which subjects have been twitted by Donald Trump. Through text mining  and word frequency analysis, the most frequent terms are selected and grouped into greater topics.
 
