@@ -25,7 +25,7 @@ ui <- fluidPage(
                              actionButton("butt", "Show sentiments in tweets")),
       
             dashboardBody("Select how many entries you wish to see", dataTableOutput("result"), shinycssloaders::withSpinner(uiOutput("out")))
-      ) #shinycssloaders::withSpinner(plotOutput("outplot"))
+      )
 )
 
 # server object - mandatory component to build an application using Shiny package
@@ -41,9 +41,10 @@ server <- function(input, output) {
       output$out <- renderUI({
 
             # load the script that analyze the frequent terms in Trump's tweets and display the plot in a popup window
-            bsModal("modal", "Sentiments in Donald Trump tweets (wait to fully load)", "butt", size = "large",renderPlot({
-                  source("sentiment.R")
-                  sentiment()
+            bsModal("modal", "Sentiments in Donald Trump tweets (wait to fully load)", "butt", size = "large",
+                    renderPlot({
+                          source("sentiment.R")
+                          sentiment()
             }))
 
       })

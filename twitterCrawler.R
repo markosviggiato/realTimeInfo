@@ -21,7 +21,7 @@ twitterCrawler <- function(){
       setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
     
       # get the 25 most recent tweets from the user specified n the first argument of 'userTimeline'
-      tw <- userTimeline("realDonaldTrump", n = 27)
+      tw <- userTimeline("realDonaldTrump", n = 25)
     
       # convert to dataframe
       dataTwitter = twitteR::twListToDF(tw)
