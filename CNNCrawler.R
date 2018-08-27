@@ -19,6 +19,10 @@ CNNCrawler <- function(){
       # HTTP request to the REST API - articles containing the word 'Trump'
       repoInfo <- fromJSON(paste0("https://newsapi.org/v1/articles?source=cnn&q=trump&apiKey=",apikey))
       dataCNN <- repoInfo$articles
+      
+      # keep only articles with keywords 'Trump' or 'trump' in the title or description
+      dataCNN <- dataCNN[ which(grepl("Trump", dataCNN$title) | grepl("trump", dataCNN$title) |
+                               grepl("Trump", dataCNN$description) | grepl("trump", dataCNN$description)),]
 
       #select the latest 25 articles
       if(length(dataCNN$title) > 25)
