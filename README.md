@@ -1,12 +1,12 @@
 # Real Time News
 
-<a href="https://edition.cnn.com/"><img src="https://fiu-assets-2-syitaetz61hl2sa.stackpathdns.com/static/use-media-items/28/27012/full-1400x1400/5670256f/cnn-logo-square.png?resolution=0" alt="CNN" title="CNN" width=90 height=90></a>  <a href="https://twitter.com/"><img src="https://seeklogo.com/images/T/twitter-2012-negative-logo-5C6C1F1521-seeklogo.com.png" alt="Twitter" title="Twitter" width=90 height=90></a>
+<a href="https://edition.cnn.com/" target="_blank"><img src="https://fiu-assets-2-syitaetz61hl2sa.stackpathdns.com/static/use-media-items/28/27012/full-1400x1400/5670256f/cnn-logo-square.png?resolution=0" alt="CNN" title="CNN" width=90 height=90></a>  <a href="https://twitter.com/" target="_blank"><img src="https://seeklogo.com/images/T/twitter-2012-negative-logo-5C6C1F1521-seeklogo.com.png" alt="Twitter" title="Twitter" width=90 height=90></a>
 
 
 
 This is a real time web application developed in R to collect the latest information related to Donald Trump from CNN and Twitter.
 
-Plase use the following link to access the application: [Real Time News](https://viggiato.shinyapps.io/real_time_news/)
+Plase use the following link to access the application: <a href="https://viggiato.shinyapps.io/real_time_news/" target="_blank">Real Time News</a>
 
 ## Features
 
