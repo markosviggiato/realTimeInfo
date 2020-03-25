@@ -1,6 +1,6 @@
 # Real Time News
 
-<a href="https://edition.cnn.com/" target="_blank"><img src="https://fiu-assets-2-syitaetz61hl2sa.stackpathdns.com/static/use-media-items/28/27012/full-1400x1400/5670256f/cnn-logo-square.png?resolution=0" alt="CNN" title="CNN" width=90 height=90></a>  <a href="https://twitter.com/" target="_blank"><img src="https://seeklogo.com/images/T/twitter-2012-negative-logo-5C6C1F1521-seeklogo.com.png" alt="Twitter" title="Twitter" width=90 height=90></a>
+<a href="https://edition.cnn.com/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/CNN.svg" alt="CNN" title="CNN" width=90 height=90></a>  <a href="https://twitter.com/" target="_blank"><img src="https://seeklogo.com/images/T/twitter-2012-negative-logo-5C6C1F1521-seeklogo.com.png" alt="Twitter" title="Twitter" width=90 height=90></a>
 
 
 
