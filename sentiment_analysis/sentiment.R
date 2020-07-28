@@ -1,7 +1,6 @@
 ### Author : Markos Viggiato
 ### Date : August 24th, 2018
-### Code developed using resources from 'https://github.com/susanli2016/Data-Analysis-with-R',
-### by Susan Li
+### Code developed using resources from 'https://github.com/susanli2016/Data-Analysis-with-R', by Susan Li
 
 #################
 

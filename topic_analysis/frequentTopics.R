@@ -1,7 +1,6 @@
 ### Author : Markos Viggiato
 ### Date : August 24th, 2018
-### Code developed using resources from 'http://www.rdatamining.com/docs/twitter-analysis-with-r',
-### by Yanchang Zhao
+### Code developed using resources from 'http://www.rdatamining.com/docs/twitter-analysis-with-r', by Yanchang Zhao
 ### This code makes of of the 'tm' package to analyze the frequent terms from tweets
 
 #################
