@@ -23,7 +23,7 @@ This application relies on a third party R package developed to perform text min
 
 In order to graphically see the sentiments, the user must click on the 'Show sentiments in tweets' button and wait for a popup window to load the graph. Then, it is possible to see the distribution of the sentiments. In this application, the following sentiments are analyzed: *anger*, *anticipation*, *disgust*, *fear*, *joy*, *negative*, *positive*, *sadness*, *surprise*, and *trust*.
 
-## Frequent Topics in Trump Tweets
+## Frequent Topics in Trump's Tweets
 This feature will allow the user to check which subjects have been twitted by Donald Trump. Through text mining  and word frequency analysis, the most frequent terms are selected and grouped into greater topics.
 
 The user will be able to see graphically the most common topics, such as through a word cloud.
